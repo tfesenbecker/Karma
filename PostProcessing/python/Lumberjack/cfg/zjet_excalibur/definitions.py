@@ -116,7 +116,10 @@ QUANTITIES = {
             expression='npumean',
             binning=np.linspace(-0.5, 80.5, 82),
         ),
-    }
+
+    },
+    "mc":{},
+    "data":{}
 }
 
 for _prefix in ("z", "jet1", "jet2", "jet3"):
