@@ -122,6 +122,12 @@ for _year in ("2016", "2017", "2018", "2018ABC", "2018D", "2018ABCD", "2017BCDEF
             TASKS[_task],
             splittings=["run{}".format(_year)] + TASKS[_task]["splittings"]
         )
+        TASKS["{}_IOV{}".format(_task, _year)] = dict(
+            TASKS[_task],
+            splittings=["iov{}".format(_year[:4])] + TASKS[_task]["splittings"]
+        )
+
+
     if '2018' in _year and _year != '2018':
         TASKS["TimeDependence_Run{}".format(_year)] = dict(
             TASKS['TimeDependence_Run2018'],
