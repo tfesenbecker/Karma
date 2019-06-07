@@ -15,6 +15,11 @@ QUANTITIES = {
             expression='run',
             binning=np.linspace(272007, 284044, _N_BINS_DEFAULT)
         ),
+        'iov2016': Quantity(
+            name='run2016',
+            expression='run',
+            binning=np.linspace(272007, 284044, _N_BINS_DEFAULT)
+        ),
         'run2017': Quantity(
             name='run2017',
             expression='run',
@@ -236,6 +241,7 @@ SPLITTINGS['iov2016'] = {
     "Run2016BCDEFGH" : dict(run=(272007, 284044+1)),
 
 }
+SPLITTINGS['iov2016BCDEFGH'] = SPLITTINGS['iov2016']
 
 
 # -- alpha binning
