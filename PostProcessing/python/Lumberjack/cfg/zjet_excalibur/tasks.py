@@ -109,13 +109,47 @@ TASKS = {
             for _suffix in ("pt", "eta", "phi")
         ] + ["run2018:{}".format(_q) for _q in ("zmass", "met", "metphi", "mpf", "ptbalance", "rho", "npumean", "npv")],
     },
+
+    "TimeDependence_Run2016" : {
+        "splittings": ["eta_wide_barrel"],
+        "histograms" :
+            [
+                "run2016:{}{}".format(_prefix, _suffix)
+                for _prefix in ("z", "jet1", "jet2", "jet3")
+                for _suffix in ("pt", "eta", "phi")
+            ] +
+            ["run2016:{}".format(_q) for _q in ("zmass", "met", "metphi", "mpf", "ptbalance", "rho", "npumean", "npv")],
+        "profiles" : [
+            "run2016:{}{}".format(_prefix, _suffix)
+            for _prefix in ("z", "jet1", "jet2", "jet3")
+            for _suffix in ("pt", "eta", "phi")
+        ] + ["run2016:{}".format(_q) for _q in ("zmass", "met", "metphi", "mpf", "ptbalance", "rho", "npumean", "npv")],
+    },
+
+    "TimeDependence" : {
+        "splittings": ["eta_wide_barrel"],
+        "histograms" :
+            [
+                "run_year:{}{}".format(_prefix, _suffix)
+                for _prefix in ("z", "jet1", "jet2", "jet3")
+                for _suffix in ("pt", "eta", "phi")
+            ] +
+            ["run_year:{}".format(_q) for _q in ("zmass", "met", "metphi", "mpf", "ptbalance", "rho", "npumean", "npv")],
+        "profiles" : [
+            "run_year:{}{}".format(_prefix, _suffix)
+            for _prefix in ("z", "jet1", "jet2", "jet3")
+            for _suffix in ("pt", "eta", "phi")
+        ] + ["run_year:{}".format(_q) for _q in ("zmass", "met", "metphi", "mpf", "ptbalance", "rho", "npumean", "npv")],
+    },
+
 }
 
 # -- add run period-specific tasks
 for _year in ("2016", "2017", "2018", "2018ABC", "2018D", "2018ABCD", "2017BCDEF", "2016BCDEFGH"):
     TASKS["CombinationData{}".format(_year)] = dict(
         TASKS["Combination"],
-        splittings=["run{}".format(_year)] + TASKS["Combination"]["splittings"]
+        # changed from run to iov
+        splittings=["iov{}".format(_year)] + TASKS["Combination"]["splittings"]
     )
     for _task in ("Extrapolation", "Shape", "Occupancy"):
         TASKS["{}_Run{}".format(_task, _year)] = dict(
@@ -127,13 +161,26 @@ for _year in ("2016", "2017", "2018", "2018ABC", "2018D", "2018ABCD", "2017BCDEF
             splittings=["iov{}".format(_year[:4])] + TASKS[_task]["splittings"]
         )
 
+    # if '2018' in _year and _year != '2018':
+    #     TASKS["TimeDependence_Run{}".format(_year)] = dict(
+    #         TASKS['TimeDependence_Run2018'],
+    #         splittings=["run{}".format(_year)] + TASKS['TimeDependence_Run2018']["splittings"]
+    #     )
+    #
+    # if '2016' in _year and _year != '2016':
+    #     TASKS["TimeDependence_Run{}".format(_year)] = dict(
+    #         TASKS["TimeDependence_Run2016"],
+    #         splittings=["iov{}".format(_year)] + TASKS["TimeDependence_Run2016"]["splittings"]
+    #     )
 
-    if '2018' in _year and _year != '2018':
+    if _year[4:]:
+
         TASKS["TimeDependence_Run{}".format(_year)] = dict(
-            TASKS['TimeDependence_Run2018'],
-            splittings=["run{}".format(_year)] + TASKS['TimeDependence_Run2018']["splittings"]
+            TASKS["TimeDependence"],
+            splittings=["run{}".format(_year)] + TASKS['TimeDependence']["splittings"],
+            histograms=[keys.replace('_year', _year[:4]) for keys in TASKS["TimeDependence"]["histograms"]],
+            profiles=[keys.replace('_year', _year[:4]) for keys in TASKS["TimeDependence"]["profiles"]]
         )
-
 
 # -- add MC-specific
 TASKS["CombinationMC"] = dict(
