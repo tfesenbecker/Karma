@@ -99,7 +99,7 @@ EXPANSIONS = {
     ],
 
     # JEC IOVs
-    'iov2016' : [
+    'iov2016': [
         {
             "name": "Run2016{}".format(_letter),
             "year": "2016",
@@ -109,7 +109,7 @@ EXPANSIONS = {
         for _letter, _color in zip(('BCD',     'EFearly', 'FlateGH', 'BCDEFGH'),
                                    ('#d92626', '#4169e1', '#b0861e', 'k'))
     ],
-    'iov2017' : [
+    'iov2017': [
         {
             "name": "Run2017{}".format(_letter),
             "year": "2017",
@@ -120,7 +120,7 @@ EXPANSIONS = {
                                    ('#ff8499', '#e90000', '#4686ed',  '#36eac1', 'k'))
     ],
 
-    'iov2018' : [
+    'iov2018': [
         {
             "name": "Run2018{}".format(_letter),
             "year": "2018",
@@ -334,3 +334,4 @@ for _expansion in EXPANSIONS['occupancy']:
 
 # merge 'run' expansion for all years (for lookup purposes)
 EXPANSIONS['run'] = EXPANSIONS['run2016'] + EXPANSIONS['run2017'] + EXPANSIONS['run2018']
+EXPANSIONS['iov'] = EXPANSIONS['iov2016'] + EXPANSIONS['iov2017'] + EXPANSIONS['iov2018']
