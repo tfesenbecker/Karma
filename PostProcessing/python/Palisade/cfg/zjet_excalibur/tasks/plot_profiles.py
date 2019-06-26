@@ -83,6 +83,8 @@ def get_config(channel, sample_name, jec_name, run_periods, quantity_pairs,
         ]
     }
 
+    print({_expansion_key : "{{{0}[name]}}".format(_expansion_key) for _expansion_key in _expansions.keys()})
+
     # append '[name]' to format keys that correspond to above expansion keys
     output_format = output_format.format(
         channel=channel,
@@ -91,6 +93,7 @@ def get_config(channel, sample_name, jec_name, run_periods, quantity_pairs,
         # get other possible replacements from expansions definition
         **{_expansion_key : "{{{0}[name]}}".format(_expansion_key) for _expansion_key in _expansions.keys()}
     )
+
 
     return {
         'input_files': _input_files,
@@ -103,7 +106,7 @@ def get_config(channel, sample_name, jec_name, run_periods, quantity_pairs,
                         expression=build_expression('data', "{quantity_pair[x_name]}", "{quantity_pair[y_name]}", run_period=_rp['name']),
                         label=r'Data ({})'.format(_rp['name']), plot_method='errorbar', color=_rp['color'],
                         marker="o", marker_style="full", pad=0, mask_zero_errors=True)
-                    for _rp in EXPANSIONS['run'] if _rp['name'] in run_periods
+                    for _rp in EXPANSIONS['iov'] if _rp['name'] in run_periods
                 ] + [
                     # MC
                     dict(
@@ -192,8 +195,10 @@ def cli(argument_parser):
     argument_parser.add_argument('--basename-data', help="prefix of ROOT files containing Data histograms", required=True)
     argument_parser.add_argument('--basename-mc', help="prefix of ROOT files containing MC histograms", required=True)
     # optional parameters
-    argument_parser.add_argument('--output-format', help="format string indicating full path to output plot", default='Profiles/{jec}/{sample}/{corr_level}/{channel}/{eta}/{quantity_pair}.png')
-
+    argument_parser.add_argument('--output-format', help="format string indicating full path to output plot",
+                                 default='Profiles/{jec}/{sample}/{corr_level}/{channel}/{eta}/{quantity_pair}.png')
+    argument_parser.add_argument('--test', help="plot only one plot for testing configuration", dest='test',
+                                 action='store_true')
 
 def run(args):
 
@@ -222,5 +227,8 @@ def run(args):
             basename_data=args.basename_data,
             basename_mc=args.basename_mc,
             output_format=args.output_format)
+        # import pprint
+        # pp = pprint.PrettyPrinter(indent=2)
+        # pp.pprint(_cfg)
         p = PlotProcessor(_cfg, output_folder=args.output_dir)
         p.run()
