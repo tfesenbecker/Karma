@@ -15,11 +15,11 @@ QUANTITIES = {
             expression='run',
             binning=np.linspace(272007, 284044, _N_BINS_DEFAULT)
         ),
-        'iov2016': Quantity(
-            name='run2016',
-            expression='run',
-            binning=np.linspace(272007, 284044, _N_BINS_DEFAULT)
-        ),
+        # 'iov2016': Quantity(
+        #     name='iov2016',
+        #     expression='iov',
+        #     binning=np.linspace(272007, 284044, _N_BINS_DEFAULT)
+        # ),
         'run2017': Quantity(
             name='run2017',
             expression='run',
@@ -246,15 +246,14 @@ SPLITTINGS['iov2016BCDEFGH'] = SPLITTINGS['iov2016']
 
 # -- alpha binning
 SPLITTINGS['alpha_exclusive'] = dict({
-    "alpha_{:04d}_{:04d}".format(int(_lo*1e2), int(_hi*1e2)) : dict(alpha=(_lo, _hi))
+    "alpha_{:04d}_{:04d}".format(int(_lo*1e2), int(_hi*1e2)): dict(alpha=(_lo, _hi))
     for _lo, _hi in zip(_ALPHA_BIN_EDGES[:-1], _ALPHA_BIN_EDGES[1:])
-}, **{"alpha_all" : dict()})
+}, **{"alpha_all": dict(alpha=(_ALPHA_BIN_EDGES[0], _ALPHA_BIN_EDGES[-1]))})
 SPLITTINGS['alpha_inclusive'] = dict({
-    "alpha_0_{:04d}".format(int(_hi*1e2)) : dict(alpha=(0, _hi))
+    "alpha_0_{:04d}".format(int(_hi*1e2)): dict(alpha=(0, _hi))
     for _hi in _ALPHA_BIN_EDGES[1:]
-}, **{"alpha_all" : dict()})
+}, **{"alpha_all": dict(alpha=(_ALPHA_BIN_EDGES[0], _ALPHA_BIN_EDGES[-1]))})
 SPLITTINGS['alpha'] = dict(SPLITTINGS['alpha_exclusive'], **SPLITTINGS['alpha_inclusive'])
-
 
 # -- eta binning
 SPLITTINGS['eta_wide'] = dict({
