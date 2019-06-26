@@ -94,7 +94,8 @@ def get_config(channel, sample_name, jec_name, run_periods, quantities,
                             build_expression('mc', "{quantity[name]}")),
                         label=r'Data ({})'.format(_rp['name']), plot_method='errorbar', color=_rp['color'],
                         marker="o", marker_style="full", pad=0)
-                    for _rp in EXPANSIONS['run'] if _rp['name'] in run_periods
+                    for _rp in EXPANSIONS['iov'] if _rp['name'] in run_periods
+                    # for _rp in EXPANSIONS['iov']
                 ] + [
                     # MC
                     dict(expression='discard_errors({})'.format(build_expression('mc', "{quantity[name]}")),
