@@ -9,7 +9,7 @@ palisade.py task zjet_excalibur plot_profiles \
     --sample 07Aug2017 \
     --corr-levels "L1L2L3" "L1L2L3Res" "L1L2Res" \
     --quantity-pairs zpt:{jet1,jet2}pt zpt:{zmass,met,mpf,ptbalance} \
-    --run-periods IOV2016{BCD,EFearly,FlateGH} \
+    --run-periods Run2016{BCD,EFearly,FlateGH,BCDEFGH} \
     --channel "mm" "ee" \
     --output-dir "plots" \
     --output-format 'Profiles/{jec}/{sample}/{corr_level}/{channel}/{eta}/{quantity_pair}.png'
